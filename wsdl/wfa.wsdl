@@ -1,0 +1,212 @@
+<definitions name='WorkflowService' targetNamespace='http://ws.wfa.netapp.com/' xmlns='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:tns='http://ws.wfa.netapp.com/' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+ <types>
+  <xs:schema targetNamespace='http://ws.wfa.netapp.com/' version='1.0' xmlns:tns='http://ws.wfa.netapp.com/' xmlns:xs='http://www.w3.org/2001/XMLSchema'>
+   <xs:element name='executeWorkflow' type='tns:executeWorkflow'/>
+   <xs:element name='executeWorkflowResponse' type='tns:executeWorkflowResponse'/>
+   <xs:element name='getAllWorkflows' type='tns:getAllWorkflows'/>
+   <xs:element name='getAllWorkflowsResponse' type='tns:getAllWorkflowsResponse'/>
+   <xs:element name='getCommandArguments' type='tns:getCommandArguments'/>
+   <xs:element name='getCommandArgumentsResponse' type='tns:getCommandArgumentsResponse'/>
+   <xs:element name='getJobStatus' type='tns:getJobStatus'/>
+   <xs:element name='getJobStatusResponse' type='tns:getJobStatusResponse'/>
+   <xs:element name='getReturnParameters' type='tns:getReturnParameters'/>
+   <xs:element name='getReturnParametersResponse' type='tns:getReturnParametersResponse'/>
+   <xs:complexType name='getJobStatus'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='jobId' type='xs:int'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='getJobStatusResponse'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='return' type='tns:jobStatus'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='jobStatus'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='endTime' type='xs:string'/>
+     <xs:element minOccurs='0' name='errorMessage' type='xs:string'/>
+     <xs:element minOccurs='0' name='jobStatus' type='xs:string'/>
+     <xs:element minOccurs='0' name='jobType' type='xs:string'/>
+     <xs:element minOccurs='0' name='plannedExecutionTime' type='xs:string'/>
+     <xs:element minOccurs='0' name='scheduleType' type='xs:string'/>
+     <xs:element minOccurs='0' name='startTime' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='executeWorkflow'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='workflowId' type='xs:int'/>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='userInputsEqualsValues' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='executeWorkflowResponse'>
+    <xs:sequence>
+     <xs:element name='return' type='xs:int'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='getAllWorkflows'>
+    <xs:sequence/>
+   </xs:complexType>
+   <xs:complexType name='getAllWorkflowsResponse'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='return' type='tns:workflow'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='workflow'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='description' type='xs:string'/>
+     <xs:element minOccurs='0' name='id' type='xs:int'/>
+     <xs:element minOccurs='0' name='name' type='xs:string'/>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='userInput' nillable='true' type='tns:userInput'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='userInput'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='defaultValue' type='xs:string'/>
+     <xs:element minOccurs='0' name='description' type='xs:string'/>
+     <xs:element minOccurs='0' name='name' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='getCommandArguments'>
+    <xs:sequence>
+     <xs:element name='jobId' type='xs:int'/>
+     <xs:element minOccurs='0' name='commandDisplayName' type='xs:string'/>
+     <xs:element name='rowNumber' type='xs:int'/>
+     <xs:element minOccurs='0' name='parameterName' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='getCommandArgumentsResponse'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='return' type='tns:commandArgument'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='commandArgument'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='name' type='xs:string'/>
+     <xs:element minOccurs='0' name='value' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='getReturnParameters'>
+    <xs:sequence>
+     <xs:element name='jobId' type='xs:int'/>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='parameters' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='getReturnParametersResponse'>
+    <xs:sequence>
+     <xs:element maxOccurs='unbounded' minOccurs='0' name='return' type='tns:returnParameter'/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name='returnParameter'>
+    <xs:sequence>
+     <xs:element minOccurs='0' name='name' type='xs:string'/>
+     <xs:element minOccurs='0' name='value' type='xs:string'/>
+    </xs:sequence>
+   </xs:complexType>
+  </xs:schema>
+ </types>
+ <message name='WorkflowService_doc_executeWorkflow'>
+  <part element='tns:executeWorkflow' name='executeWorkflow'></part>
+ </message>
+ <message name='WorkflowService_doc_getReturnParametersResponse'>
+  <part element='tns:getReturnParametersResponse' name='getReturnParametersResponse'></part>
+ </message>
+ <message name='WorkflowService_doc_getAllWorkflows'>
+  <part element='tns:getAllWorkflows' name='getAllWorkflows'></part>
+ </message>
+ <message name='WorkflowService_doc_getCommandArgumentsResponse'>
+  <part element='tns:getCommandArgumentsResponse' name='getCommandArgumentsResponse'></part>
+ </message>
+ <message name='WorkflowService_doc_executeWorkflowResponse'>
+  <part element='tns:executeWorkflowResponse' name='executeWorkflowResponse'></part>
+ </message>
+ <message name='WorkflowService_doc_getJobStatus'>
+  <part element='tns:getJobStatus' name='getJobStatus'></part>
+ </message>
+ <message name='WorkflowService_doc_getAllWorkflowsResponse'>
+  <part element='tns:getAllWorkflowsResponse' name='getAllWorkflowsResponse'></part>
+ </message>
+ <message name='WorkflowService_doc_getJobStatusResponse'>
+  <part element='tns:getJobStatusResponse' name='getJobStatusResponse'></part>
+ </message>
+ <message name='WorkflowService_doc_getReturnParameters'>
+  <part element='tns:getReturnParameters' name='getReturnParameters'></part>
+ </message>
+ <message name='WorkflowService_doc_getCommandArguments'>
+  <part element='tns:getCommandArguments' name='getCommandArguments'></part>
+ </message>
+ <portType name='WorkflowService_doc'>
+  <operation name='executeWorkflow' parameterOrder='executeWorkflow'>
+   <input message='tns:WorkflowService_doc_executeWorkflow'></input>
+   <output message='tns:WorkflowService_doc_executeWorkflowResponse'></output>
+  </operation>
+  <operation name='getAllWorkflows' parameterOrder='getAllWorkflows'>
+   <input message='tns:WorkflowService_doc_getAllWorkflows'></input>
+   <output message='tns:WorkflowService_doc_getAllWorkflowsResponse'></output>
+  </operation>
+  <operation name='getCommandArguments' parameterOrder='getCommandArguments'>
+   <input message='tns:WorkflowService_doc_getCommandArguments'></input>
+   <output message='tns:WorkflowService_doc_getCommandArgumentsResponse'></output>
+  </operation>
+  <operation name='getJobStatus' parameterOrder='getJobStatus'>
+   <input message='tns:WorkflowService_doc_getJobStatus'></input>
+   <output message='tns:WorkflowService_doc_getJobStatusResponse'></output>
+  </operation>
+  <operation name='getReturnParameters' parameterOrder='getReturnParameters'>
+   <input message='tns:WorkflowService_doc_getReturnParameters'></input>
+   <output message='tns:WorkflowService_doc_getReturnParametersResponse'></output>
+  </operation>
+ </portType>
+ <binding name='WorkflowService_docBinding' type='tns:WorkflowService_doc'>
+  <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http'/>
+  <operation name='executeWorkflow'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='getAllWorkflows'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='getCommandArguments'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='getJobStatus'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='getReturnParameters'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+ </binding>
+ <service name='WorkflowService'>
+  <port binding='tns:WorkflowService_docBinding' name='WorkflowService_docPort'>
+   <soap:address location='http://10.72.64.247/wfa-ws/WorkflowService_doc'/>
+  </port>
+ </service>
+</definitions>

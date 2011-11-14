@@ -1,0 +1,62 @@
+WFAWorkflow: Sample Gold Provisioning
+StorageServiceName: Thin Provisioned
+StorageServiceId: 97
+Description: Thin Provisioned Space for VMFS Datastores with Mirror
+IsDRCapable: false
+ServiceContact: 
+ProtectionPolicy: Mirror
+ProtectionPolicyId: Mirror
+StorageServiceNodes: 
+
+    - DPNodeId: 1
+      DPNodeName: Primary data
+      vFilerTemplateId: null
+      vFilerTemplateName: null
+
+      ResourcePools:
+         - ResourcePoolId: 97
+           ResourcePoolName: Default Storage Service Primary Pool
+
+      ProvisioningPolicy:
+         - PolicyId: 96
+           PolicyName: Reserved Data Space for Hyper-V Delegated Storage
+           PolicyType: san
+           ResourceTag:
+           DatasetMemberUsedSpaceThresholds: 
+           DedupeEnabled: true
+           DedupeSchedule: 0@mon,tue,wed,thu,fri,sat,sun
+
+         - PolicyId: 94
+           PolicyName: Reserved Data Space for Hyper-V Storage
+           PolicyType: san
+           ResourceTag: 
+           DatasetMemberUsedSpaceThresholds: 
+           DedupeEnabled: true
+           DedupeSchedule: 0@mon,tue,wed,thu,fri,sat,sun
+
+    - DPNodeId: 2
+      DPNodeName: Mirror
+      vFilerTemplateId: null
+      vFilerTemplateName: null
+
+      ResourcePools:
+         - ResourcePoolId: 98
+           ResourcePoolName: Default Storage Service Mirror Pool
+
+      ProvisioningPolicy:
+         - PolicyId: 96
+           PolicyName: Reserved Data Space for Hyper-V Delegated Storage
+           PolicyType: san
+           ResourceTag: 
+           DatasetMemberUsedSpaceThresholds: 
+           DedupeEnabled: true
+           DedupeSchedule: 0@mon,tue,wed,thu,fri,sat,sun
+
+         - PolicyId: 94
+           PolicyName: Reserved Data Space for Hyper-V Storage
+           PolicyType: san
+           ResourceTag: 
+           DatasetMemberUsedSpaceThresholds: 
+           DedupeEnabled: true
+           DedupeSchedule: 0@mon,tue,wed,thu,fri,sat,sun
+
