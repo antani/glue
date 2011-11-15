@@ -96,49 +96,96 @@ public class StorageServiceTest {
                           return;
                       Iterator rpIter = rpList.iterator();
                       while(rpIter.hasNext()){
+                    	  
                     	  NaElement rpInfo = (NaElement) rpIter.next();
-                    	  System.out.println("                              Resource Pool Id : " + rpInfo.getChildContent("resourcepool-id"));
-                    	  System.out.println("                              Resource Pool Name : " + rpInfo.getChildContent("resourcepool-name"));
+                    	  String rpId = rpInfo.getChildContent("resourcepool-id");
+                    	  
+                    	  if(rpId != null) {
+	                    	  
+	                    	  System.out.println("                              Resource Pool Id : " + rpId);
+	                    	  System.out.println("                              Resource Pool Name : " + rpInfo.getChildContent("resourcepool-name"));
+	                    	  
+	                    	  NaElement inputRP = new NaElement("resourcepool-member-list-info-iter-start");
+		                      inputRP.addNewChild("resourcepool-name-or-id",rpId );
+		                      NaElement outputRP= server.invokeElem(inputRP);
+		          		    // Extracting the record && tag values && printing them
+		                      String recordsRP = outputRP.getChildContent("records");
+		                      if (recordsRP.equals("0"))
+		                          System.out.println("\nNo Resourcepools to display");
+		
+		                      String tagRP= outputRP.getChildContent("tag");
+		                      // Extracting records one at a time
+		                      inputRP = new NaElement("resourcepool-member-list-info-iter-next");
+		                      inputRP.addNewChild("maximum", recordsRP);
+		                      inputRP.addNewChild("tag", tagRP);
+		                      NaElement rps = server.invokeElem(inputRP);
+		                      NaElement resourcePoolMemberInfo = rps.getChildByName("resourcepool-members");
+		                      List rpInfoList = null;
+		                      if (resourcePoolMemberInfo != null)
+		                    	  rpInfoList = resourcePoolMemberInfo.getChildren();
+		                      if (rpInfoList == null)
+		                          return;
+		                      Iterator rpInfoIter = rpInfoList.iterator();
+		                      while(rpInfoIter.hasNext()){
+		                    	  NaElement rpInfoElement = (NaElement) rpInfoIter.next();
+		                    	  System.out.println("                                                MemberId : " + rpInfoElement.getChildContent("member-id"));
+		                    	  System.out.println("                                                MemberName : " + rpInfoElement.getChildContent("member-name"));
+		                    	  System.out.println("                                                MemberSize : " + rpInfoElement.getChildContent("member-size"));
+		                    	  System.out.println("                                                MemberStatus : " + rpInfoElement.getChildContent("member-status"));
+		                    	  System.out.println("                                                MemberType : " + rpInfoElement.getChildContent("member-type"));
+		                    	  
+		                      }
+		                      // 	invoking the iter-end zapi
+		                      inputRP = new NaElement("resourcepool-member-list-info-iter-end");
+		                      inputRP.addNewChild("tag", tagRP);
+		                      server.invokeElem(inputRP);
+                    	  }
+                    	  
                     	  
                       }
-                      System.out.println("                        Provisioning Policy");
-                      
-                      
-                      NaElement inputPolicy = new NaElement("provisioning-policy-list-iter-start");
-                      NaElement outputPolicy = server.invokeElem(inputPolicy);
-          		    // Extracting the record && tag values && printing them
-                      String recordsPolicy = outputPolicy.getChildContent("records");
-                      if (recordsPolicy.equals("0"))
-                          System.out.println("\nNo policies to display");
-
-                      String tagPolicy = outputPolicy.getChildContent("tag");
-                      // Extracting records one at a time
-                      inputPolicy = new NaElement("provisioning-policy-list-iter-next");
-                      inputPolicy.addNewChild("maximum", recordsPolicy);
-                      inputPolicy.addNewChild("tag", tagPolicy);
-                      NaElement recordPolicy = server.invokeElem(inputPolicy);
-                      
-                      NaElement policy = recordPolicy.getChildByName("provisioning-policies");
-                      List policyList = null;
-                      if (policy != null)
-                    	  policyList = policy.getChildren();
-                      if (policyList == null)
-                          return;
-                      Iterator policyIter = policyList.iterator();
-                      while(policyIter.hasNext()){
-                    	  NaElement policyInfo = (NaElement) policyIter.next();
-                    	  System.out.println("                              Policy Id : " + policyInfo.getChildContent("provisioning-policy-id"));
-                    	  System.out.println("                              Policy Name : " + policyInfo.getChildContent("provisioning-policy-name"));
-                    	  System.out.println("                              Policy type : " + policyInfo.getChildContent("provisioning-policy-type"));
-                    	  System.out.println("                              Resource Tag : " + policyInfo.getChildContent("resource-tag"));
-                    	  System.out.println("                              dataset-member-used-space-thresholds : " + policyInfo.getChildContent("dataset-member-used-space-thresholds"));
-                    	  System.out.println("                              dedupe-enabled : " + policyInfo.getChildContent("dedupe-enabled"));
-                    	  System.out.println("                              dedupe-schedule : " + policyInfo.getChildContent("dedupe-schedule"));
-                      }	  
-                      // 	invoking the iter-end zapi
-                      inputPolicy = new NaElement("provisioning-policy-list-iter-end");
-                      inputPolicy.addNewChild("tag", tagPolicy);
-                      server.invokeElem(inputPolicy);
+                   
+                      String provPolicyId= nodeInfo.getChildContent("provisioning-policy-id");
+                      if(provPolicyId != null){
+                    	  System.out.println("                        Provisioning Policy");
+	                      System.out.println("                        ProvisioningPolicyId : " + provPolicyId);
+	                      
+	                      NaElement inputPolicy = new NaElement("provisioning-policy-list-iter-start");
+	                      inputPolicy.addNewChild("provisioning-policy-name-or-id",nodeInfo.getChildContent("provisioning-policy-id")+"" );
+	                      NaElement outputPolicy = server.invokeElem(inputPolicy);
+	          		    // Extracting the record && tag values && printing them
+	                      String recordsPolicy = outputPolicy.getChildContent("records");
+	                      if (recordsPolicy.equals("0"))
+	                          System.out.println("\nNo policies to display");
+	
+	                      String tagPolicy = outputPolicy.getChildContent("tag");
+	                      // Extracting records one at a time
+	                      inputPolicy = new NaElement("provisioning-policy-list-iter-next");
+	                      inputPolicy.addNewChild("maximum", recordsPolicy);
+	                      inputPolicy.addNewChild("tag", tagPolicy);
+	                      NaElement recordPolicy = server.invokeElem(inputPolicy);
+	                      
+	                      NaElement policy = recordPolicy.getChildByName("provisioning-policies");
+	                      List policyList = null;
+	                      if (policy != null)
+	                    	  policyList = policy.getChildren();
+	                      if (policyList == null)
+	                          return;
+	                      Iterator policyIter = policyList.iterator();
+	                      while(policyIter.hasNext()){
+	                    	  NaElement policyInfo = (NaElement) policyIter.next();
+	                    	  System.out.println("                              Policy Id : " + policyInfo.getChildContent("provisioning-policy-id"));
+	                    	  System.out.println("                              Policy Name : " + policyInfo.getChildContent("provisioning-policy-name"));
+	                    	  System.out.println("                              Policy type : " + policyInfo.getChildContent("provisioning-policy-type"));
+	                    	  System.out.println("                              Resource Tag : " + policyInfo.getChildContent("resource-tag"));
+	                    	  System.out.println("                              dataset-member-used-space-thresholds : " + policyInfo.getChildContent("dataset-member-used-space-thresholds"));
+	                    	  System.out.println("                              dedupe-enabled : " + policyInfo.getChildContent("dedupe-enabled"));
+	                    	  System.out.println("                              dedupe-schedule : " + policyInfo.getChildContent("dedupe-schedule"));
+	                      }	  
+	                      // 	invoking the iter-end zapi
+	                      inputPolicy = new NaElement("provisioning-policy-list-iter-end");
+	                      inputPolicy.addNewChild("tag", tagPolicy);
+	                      server.invokeElem(inputPolicy);
+                      }
                 }
                 
                 

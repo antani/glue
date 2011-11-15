@@ -1,5 +1,10 @@
+#General Parameters
 WFAWorkflow: "Sample Gold Provisioning"
 StorageServiceName: "Thin Provisioned"
+#WFA Workflow specific parameters:
+ArrayIp: "10.10.10.10"
+VolumeName: "Gold Volume"
+#Storage Service specific parameters 
 StorageServiceId: 97
 Description: "Thin Provisioned Space for VMFS Datastores with Mirror"
 IsDRCapable: false

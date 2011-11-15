@@ -31,13 +31,16 @@ public class WFAServiceTestClient {
 			e1.printStackTrace();
 		}
 		WebServiceWrapper wrapper = new WebServiceWrapper(serverConf.getWfaserver(), serverConf.getWfausername(), serverConf.getWfapassword());
-		Object[] response=null;
+		Object[] response=null, response_validate=null;
 		try {
+			//response_validate = wrapper.invokeWebService("ValidationService", "validateConfiguration");
 			response = wrapper.invokeWebService("WorkflowService_doc","getAllWorkflows");
+			  
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//printResponse(response_validate);
 		printResponse(response);
 	}
 	private static void printResponse(Object[] arr){
@@ -46,7 +49,7 @@ public class WFAServiceTestClient {
 			System.out.println("Workflow Details ");
 			System.out.println("~~~~~~~~~~~~~~~~");
 			for (Workflow t : wf){
-				
+				System.out.println(" Id: " + t.getId());
 				System.out.println(" Name: " + t.getName());
 				System.out.println(" Description: " + t.getDescription());
 				List<UserInput> userInput = t.getUserInput();
